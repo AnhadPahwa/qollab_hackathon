@@ -1,0 +1,83 @@
+{
+ "n_objects": 280,
+ "n_anomalies": 40,
+ "n_splits": 10,
+ "comparison": [
+  {
+   "model": "One-class SVM, RBF kernel (tuned)",
+   "auc_mean": 0.791,
+   "auc_std": 0.046
+  },
+  {
+   "model": "Isolation forest",
+   "auc_mean": 0.708,
+   "auc_std": 0.044
+  },
+  {
+   "model": "Local outlier factor",
+   "auc_mean": 0.804,
+   "auc_std": 0.024
+  },
+  {
+   "model": "Classical prototype score, RBF (tuned)",
+   "auc_mean": 0.797,
+   "auc_std": 0.029
+  },
+  {
+   "model": "Quantum kernel one-class SVM",
+   "auc_mean": 0.773,
+   "auc_std": 0.078
+  },
+  {
+   "model": "Quantum prototype score (exact)",
+   "auc_mean": 0.769,
+   "auc_std": 0.043
+  }
+ ],
+ "shot_study": [
+  {
+   "shots": 40,
+   "samples_per_object": 200,
+   "auc_mean": 0.751
+  },
+  {
+   "shots": 100,
+   "samples_per_object": 500,
+   "auc_mean": 0.762
+  },
+  {
+   "shots": 400,
+   "samples_per_object": 2000,
+   "auc_mean": 0.767
+  },
+  {
+   "shots": 1000,
+   "samples_per_object": 5000,
+   "auc_mean": 0.768
+  }
+ ],
+ "noise_study": {
+  "signal_survival": 0.89,
+  "shots": 400,
+  "rows": [
+   {
+    "case": "No noise",
+    "auc": 0.767,
+    "false_alarm_rate": 0.237,
+    "quasars_flagged": 0.646
+   },
+   {
+    "case": "IonQ-level noise, uncorrected",
+    "auc": 0.766,
+    "false_alarm_rate": 0.527,
+    "quasars_flagged": 0.914
+   },
+   {
+    "case": "IonQ-level noise, calibrated",
+    "auc": 0.764,
+    "false_alarm_rate": 0.25,
+    "quasars_flagged": 0.644
+   }
+  ]
+ }
+}

@@ -1,0 +1,424 @@
+{
+ "note": "Runs on the IonQ Forte 1 noisy simulator through Qollab, 10 Oct 2026. 'runs' used an earlier six-prototype circuit without calibration; 'calibrated_runs' used the final circuit (five prototypes plus a calibration block, noise-free calibration value 0.938, threshold 0.443). 'measured', 'corrected' and 'exact' are per-block overlaps.",
+ "runs": [
+  {
+   "object": 0,
+   "class": "STAR",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.6,
+   "measured": [
+    0.82,
+    0.85,
+    0.65,
+    0.8,
+    0.03,
+    0.3
+   ],
+   "exact": [
+    0.95,
+    0.93,
+    0.71,
+    0.83,
+    0.07,
+    0.35
+   ],
+   "score": 0.425,
+   "exact_score": 0.36
+  },
+  {
+   "object": 0,
+   "class": "STAR",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.7,
+   "measured": [
+    0.78,
+    0.72,
+    0.7,
+    0.75,
+    0.07,
+    0.38
+   ],
+   "exact": [
+    0.95,
+    0.93,
+    0.71,
+    0.83,
+    0.07,
+    0.35
+   ],
+   "score": 0.433,
+   "exact_score": 0.36
+  },
+  {
+   "object": 0,
+   "class": "STAR",
+   "shots": 100,
+   "exec_ms": 5000,
+   "wall_s": 12.3,
+   "measured": [
+    0.82,
+    0.87,
+    0.63,
+    0.73,
+    0.09,
+    0.37
+   ],
+   "exact": [
+    0.95,
+    0.93,
+    0.71,
+    0.83,
+    0.07,
+    0.35
+   ],
+   "score": 0.415,
+   "exact_score": 0.36
+  },
+  {
+   "object": 0,
+   "class": "STAR",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 33.5,
+   "measured": [
+    0.87,
+    0.84,
+    0.65,
+    0.74,
+    0.07,
+    0.3
+   ],
+   "exact": [
+    0.95,
+    0.93,
+    0.71,
+    0.83,
+    0.07,
+    0.35
+   ],
+   "score": 0.422,
+   "exact_score": 0.36
+  },
+  {
+   "object": 10,
+   "class": "STAR",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.4,
+   "measured": [
+    0.65,
+    0.5,
+    0.93,
+    0.45,
+    0.12,
+    0.2
+   ],
+   "exact": [
+    0.82,
+    0.44,
+    0.99,
+    0.5,
+    0.06,
+    0.27
+   ],
+   "score": 0.525,
+   "exact_score": 0.485
+  },
+  {
+   "object": 20,
+   "class": "STAR",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.3,
+   "measured": [
+    0.72,
+    0.45,
+    0.93,
+    0.42,
+    0.05,
+    0.28
+   ],
+   "exact": [
+    0.92,
+    0.59,
+    0.99,
+    0.6,
+    0.05,
+    0.32
+   ],
+   "score": 0.525,
+   "exact_score": 0.422
+  },
+  {
+   "object": 96,
+   "class": "QSO",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 13.0,
+   "measured": [
+    0.72,
+    0.93,
+    0.38,
+    0.55,
+    0.15,
+    0.3
+   ],
+   "exact": [
+    0.76,
+    0.98,
+    0.48,
+    0.59,
+    0.1,
+    0.32
+   ],
+   "score": 0.496,
+   "exact_score": 0.461
+  },
+  {
+   "object": 99,
+   "class": "QSO",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.4,
+   "measured": [
+    0.55,
+    0.4,
+    0.9,
+    0.45,
+    0.07,
+    0.33
+   ],
+   "exact": [
+    0.72,
+    0.35,
+    0.95,
+    0.47,
+    0.09,
+    0.23
+   ],
+   "score": 0.55,
+   "exact_score": 0.532
+  },
+  {
+   "object": 105,
+   "class": "QSO",
+   "shots": 40,
+   "exec_ms": 2000,
+   "wall_s": 12.5,
+   "measured": [
+    0.7,
+    0.4,
+    0.95,
+    0.42,
+    0.1,
+    0.1
+   ],
+   "exact": [
+    0.7,
+    0.35,
+    0.92,
+    0.47,
+    0.09,
+    0.17
+   ],
+   "score": 0.554,
+   "exact_score": 0.55
+  }
+ ],
+ "calibrated_runs": [
+  {
+   "object": 0,
+   "class": "STAR",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 33.5,
+   "calibration_measured": 0.865,
+   "measured": [
+    0.86,
+    0.64,
+    0.86,
+    0.05,
+    0.75
+   ],
+   "corrected": [
+    0.93,
+    0.69,
+    0.93,
+    0.05,
+    0.81
+   ],
+   "exact": [
+    0.93,
+    0.71,
+    0.95,
+    0.07,
+    0.83
+   ],
+   "score_measured": 0.368,
+   "score_corrected": 0.316,
+   "score_exact": 0.304
+  },
+  {
+   "object": 10,
+   "class": "STAR",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 33.6,
+   "calibration_measured": 0.85,
+   "measured": [
+    0.42,
+    0.88,
+    0.73,
+    0.05,
+    0.47
+   ],
+   "corrected": [
+    0.46,
+    0.97,
+    0.81,
+    0.05,
+    0.52
+   ],
+   "exact": [
+    0.44,
+    0.99,
+    0.82,
+    0.06,
+    0.5
+   ],
+   "score_measured": 0.49,
+   "score_corrected": 0.439,
+   "score_exact": 0.437
+  },
+  {
+   "object": 20,
+   "class": "STAR",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 33.1,
+   "calibration_measured": 0.877,
+   "measured": [
+    0.52,
+    0.91,
+    0.84,
+    0.05,
+    0.58
+   ],
+   "corrected": [
+    0.55,
+    0.97,
+    0.9,
+    0.05,
+    0.62
+   ],
+   "exact": [
+    0.59,
+    0.99,
+    0.92,
+    0.05,
+    0.6
+   ],
+   "score_measured": 0.421,
+   "score_corrected": 0.382,
+   "score_exact": 0.371
+  },
+  {
+   "object": 96,
+   "class": "QSO",
+   "shots": 400,
+   "exec_ms": 20000,
+   "wall_s": 33.0,
+   "calibration_measured": 0.87,
+   "measured": [
+    0.91,
+    0.47,
+    0.73,
+    0.09,
+    0.6
+   ],
+   "corrected": [
+    0.98,
+    0.5,
+    0.79,
+    0.09,
+    0.64
+   ],
+   "exact": [
+    0.98,
+    0.48,
+    0.76,
+    0.1,
+    0.59
+   ],
+   "score_measured": 0.44,
+   "score_corrected": 0.398,
+   "score_exact": 0.418
+  },
+  {
+   "object": 99,
+   "class": "QSO",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 32.9,
+   "calibration_measured": 0.843,
+   "measured": [
+    0.34,
+    0.9,
+    0.65,
+    0.09,
+    0.46
+   ],
+   "corrected": [
+    0.38,
+    1.0,
+    0.72,
+    0.09,
+    0.5
+   ],
+   "exact": [
+    0.35,
+    0.95,
+    0.72,
+    0.09,
+    0.47
+   ],
+   "score_measured": 0.513,
+   "score_corrected": 0.462,
+   "score_exact": 0.484
+  },
+  {
+   "object": 105,
+   "class": "QSO",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 33.1,
+   "calibration_measured": 0.858,
+   "measured": [
+    0.35,
+    0.83,
+    0.65,
+    0.07,
+    0.42
+   ],
+   "corrected": [
+    0.38,
+    0.91,
+    0.7,
+    0.07,
+    0.45
+   ],
+   "exact": [
+    0.35,
+    0.92,
+    0.69,
+    0.09,
+    0.47
+   ],
+   "score_measured": 0.537,
+   "score_corrected": 0.496,
+   "score_exact": 0.496
+  }
+ ]
+}
