@@ -1,0 +1,8 @@
+# What a run needs: main.py, quantum_core.py, runner.py, experiments.py.
+# Install locally with:  pip install -r requirements.txt
+#
+# Do NOT add this file to the Qollab project. Qollab already provides all
+# three packages, and the project runs there with no requirements file.
+qiskit>=2.5.2,<3.0.0
+numpy>=1.26
+matplotlib>=3.8

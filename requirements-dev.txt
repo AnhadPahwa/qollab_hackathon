@@ -1,0 +1,10 @@
+# Extra packages for reproducing the benchmark and the noise check locally:
+# prepare_data.py, compare.py, tuning_study.py, noise_check.py.
+# Install with:  pip install -r requirements-dev.txt
+#
+# Never add this file to the Qollab project: qiskit-aer needs compiled code
+# that the browser runtime cannot install, and it would stop the run.
+-r requirements.txt
+pandas>=2.0
+scikit-learn>=1.4
+qiskit-aer>=0.17

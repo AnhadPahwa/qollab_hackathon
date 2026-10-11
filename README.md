@@ -77,11 +77,11 @@ Every experiment run ends with a line starting `RESULT` that holds its numbers a
 The benchmark runs thousands of small circuits, and IonQ backends on Qollab accept one circuit per run, so it runs on a laptop and its results ship as files.
 
 ```
-pip install qiskit numpy pandas scikit-learn
+pip install -r requirements-dev.txt
 python test_core.py                               # 10 checks of the circuit and the correction
 python prepare_data.py star_classification.csv    # writes objects.csv
 python compare.py                                 # writes model.json and results.json
-python noise_check.py                             # optional, needs qiskit-aer
+python noise_check.py                             # optional
 python tuning_study.py star_classification.csv    # optional, larger sample
 ```
 
@@ -296,6 +296,7 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 - **Two-point calibration.** Add a second calibration block with a low known overlap, so the run measures the noise floor that the correction currently assumes. Finding 6 is the case it should fix.
 - **Hardware.** Run the calibrated circuit on an IonQ quantum computer and check whether one calibration block is enough when qubits differ.
 - **More features.** Light-curve features from time-domain surveys would raise the dimension, which is where quantum kernels are harder to simulate classically.
+- **Other surveys.** The scaling and prototypes here are fitted to Sloan survey colours, so they do not transfer to a telescope with different filters. Refitting them on a new survey's catalogue needs only a change to `prepare_data.py`, and a set of objects with known classes to test the result against.
 - **Other domains.** `quantum_core.py` has no astronomy in it. Any four numeric features scaled to the range 0 to π/2 will work.
 
 ## Files
@@ -317,6 +318,8 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 | `ionq_runs.json` | Raw results of every simulator run reported here, IonQ and IBM noise model |
 | `noise_check.py` | Tests the calibration under gate-level noise on a local simulator |
 | `test_core.py` | Ten checks of the encoding, the circuit layout, result parsing and the correction |
+| `requirements.txt` | Packages a run needs, for local use. Not needed on Qollab |
+| `requirements-dev.txt` | Extra packages for the benchmark scripts and the noise check |
 | `LICENSE` | MIT licence |
 | `tuning_study.py` | Larger-sample sweep of 16 quantum encodings |
 
