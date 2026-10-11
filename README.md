@@ -38,7 +38,7 @@ The effect of noise at the level measured on the IonQ Forte 1 simulator, at 400 
 | IonQ-level noise, uncorrected | 0.766 | 53% | 91% |
 | IonQ-level noise, with the calibration block | 0.764 | 25% | 64% |
 
-Noise leaves the ranking of objects almost unchanged but pushes every score upwards, so more than half of the normal objects get flagged. The calibration block restores the intended operating point.
+Noise leaves the ranking of objects almost unchanged but pushes every score upwards, so more than half of the normal objects get flagged. The calibration block restores the intended operating point. This table applies the measured IonQ noise level through a simple model. Runs on real simulators are in findings 4 and 6: the correction held on the IonQ simulator, and on an IBM noise-model simulator it helped but overshot.
 
 ## How to run it
 
@@ -52,9 +52,25 @@ Noise leaves the ranking of objects almost unchanged but pushes every score upwa
 
 6. **Layers** changes the number of encoding layers, for studying noise against circuit depth. Every reported result uses 2, and no verdict is given at other values. **Chart** turns the bar chart off.
 
-A run needs only `main.py`, `quantum_core.py` and `model.json`. It uses Qiskit, NumPy and Matplotlib, which the Qollab runtime already provides, so no `requirements.txt` is needed.
+An example run, object 105 (a quasar) on the IonQ Forte 1 simulator:
+
+![Overlaps for object 105: measured, corrected and exact](figures/score_object105.svg)
+
+A run needs `main.py`, `quantum_core.py`, `runner.py`, `experiments.py` and `model.json`. It uses Qiskit, NumPy and Matplotlib, which the Qollab runtime already provides, so no `requirements.txt` is needed.
 
 On a backend that is not IonQ, such as Qollab's built-in simulator, the same six blocks are sent as six separate 4-qubit circuits. Local simulators accept many circuits per run, and this avoids simulating 24 qubits in the browser. The numbers mean the same thing, and on a noise-free simulator the calibration block reports 100%.
+
+### Experiments on Qollab
+
+The **Experiment** field under Run settings switches between three modes.
+
+| Experiment | What one run does | Where it runs |
+|---|---|---|
+| `score` (default) | Scores one object and gives a verdict | Any backend |
+| `depth` | Measures how much signal survives the noise at 1 to 6 encoding layers, using six calibration blocks side by side in one circuit | Any backend |
+| `sample` | Scores many objects (**Sample Size**, default 40) and compares the verdicts with and without the correction | A browser simulator, for example an IBM noise-model simulator. On IonQ it scores one object per run |
+
+Every experiment run ends with a line starting `RESULT` that holds its numbers as JSON. Paste the console output of one or more runs into a text file and run `python collect_runs.py pasted_output.txt` to get the tables and add the runs to `ionq_runs.json`.
 
 ### Reproducing the benchmark locally
 
@@ -174,9 +190,59 @@ Six runs of the final circuit on the IonQ Forte 1 noisy simulator, at 400 shots 
 - **All six corrected verdicts match the noise-free verdicts.** Five of the six match the true class. Object 96 is a quasar that the method misses even without noise (exact score 0.418).
 - **The calibration block reported between 89% and 93% signal survival**, an average of 91%, in line with the 0.89 fitted from the earlier runs.
 
+A repeat of object 105 the next day, with the final code, gave 91% signal survival, a measured score of 0.539 and a corrected score of 0.501 against the exact 0.496.
+
 Six objects is a small sample. It shows the correction behaving as designed, not a measured false-alarm rate.
 
-### 5. Shots and accuracy
+### 5. Noise against circuit depth: about 1.6% lost per two-qubit gate
+
+The `depth` experiment puts six calibration blocks with 1 to 6 encoding layers side by side in one circuit, so one run measures the signal survival at every depth. Three runs on the IonQ Forte 1 noisy simulator, 400 shots each:
+
+| Encoding layers | Two-qubit gates that count | Mean signal survived | Lowest | Highest | Fitted |
+|---|---|---|---|---|---|
+| 1 | 0 | 99% | 99% | 100% | 100% |
+| 2 | 6 | 91% | 90% | 92% | 91% |
+| 3 | 12 | 82% | 80% | 84% | 83% |
+| 4 | 18 | 75% | 73% | 76% | 75% |
+| 5 | 24 | 68% | 63% | 72% | 68% |
+| 6 | 30 | 64% | 54% | 73% | 62% |
+
+![Signal surviving the noise, by encoding depth](figures/depth_forte1_average.png)
+
+- **One number describes the whole curve.** A loss of 1.6% of the signal per two-qubit gate, fitted to the means, reproduces every depth to within 2 points.
+- **The gates that count are fewer than the gates written.** A block has 6 CZ gates per layer as written. The two CZ layers in the middle of each block have only diagonal gates between them and cancel, which leaves 6 × layers − 6. With that count the fit passes through 100% at zero gates. With the written count it does not.
+- **One layer is almost noise-free, which confirms finding 8 on the simulator.** At one layer every CZ gate cancels. The measured survival is 99%, as if the entangling gates were not there.
+- **The design depth of two layers costs 9% of the signal**, in line with the 89% to 93% reported by the calibration block in the scoring runs.
+- **Single runs are noisy at depth.** At six layers the three runs gave 73%, 54% and 64%. In the first run six layers read higher than five; the mean does not.
+
+The console output of the first run was not saved. Its values were recovered from the point coordinates in the saved chart file (`figures/depth_forte1_run1.svg`), and they convert to whole counts of 400 shots. The charts of the three single runs are `figures/depth_forte1_run1.svg` to `run3.svg`. `depth_figure.py` rebuilds the table and the averaged figure from `ionq_runs.json`.
+
+### 6. A second backend: the correction helps, but over-corrects
+
+The `sample` experiment scored 40 test objects (20 normal, 20 quasars) on `fake_boston`, one of Qollab's IBM noise-model simulators, at 400 shots each. That backend runs in the browser and accepts many circuits per run, and its noise comes from a different kind of machine, so it tests whether the calibration carries over. The calibration block reported 88% to 96% signal survival, 92% on average.
+
+| | Noise-free | Uncorrected | Corrected |
+|---|---|---|---|
+| Normal objects flagged | 25% | 35% | 25% |
+| Quasars flagged | 50% | 70% | 35% |
+| Verdicts matching noise-free | 40 of 40 | 34 of 40 | 35 of 40 |
+| Mean error of the score | 0 | 0.028 | 0.016 |
+| Average shift of the score | 0 | +0.027 | −0.013 |
+
+- **The correction nearly halves the score error and restores the false-alarm rate**, from 35% back to the noise-free 25%.
+- **It overshoots.** Uncorrected scores are 0.027 too high on average; corrected scores are 0.013 too low. The share of quasars flagged falls to 35%, below the noise-free 50%.
+- **Verdict agreement barely moves**, 34 against 35 of 40. All 23 objects whose noise-free score is at least 0.03 from the threshold get the right verdict either way. The 17 near the threshold are where small errors flip verdicts, in both directions.
+- **The likely cause is the noise model behind the correction.** It assumes a block hit by noise returns a random result, so `0000` appears one time in 16. On a machine where noise tends to relax qubits towards 0, a low-overlap block gains some `0000` results as well as losing them, so it shrinks less than the high-overlap calibration block predicts. We have not tested this explanation.
+
+On the IonQ simulator the same correction left no such overshoot in six runs (finding 4): the corrected scores fell on both sides of the exact values. One calibration block with one assumed noise model is therefore not universal. A second calibration block with a low known overlap would measure the floor directly in place of assuming it.
+
+![Measured score against the noise-free score, IBM noise-model simulator](figures/sample_ibm.svg)
+
+In the chart, points on the diagonal line match the noise-free score. The uncorrected points sit above it, and the corrected points sit slightly below.
+
+The run took 371 seconds for 240 circuits.
+
+### 7. Shots and accuracy
 
 The scorer with a limited number of shots (simulated sampling, no gate noise):
 
@@ -190,15 +256,15 @@ The scorer with a limited number of shots (simulated sampling, no gate noise):
 
 At 400 shots, which runs in about 35 seconds, almost nothing is lost to sampling.
 
-### 6. A one-layer encoding has no working entanglement
+### 8. A one-layer encoding has no working entanglement
 
 With a single RY, CZ, RZ layer, the CZ gates of the candidate's encoding meet the CZ gates of the prototype's inverse encoding with only diagonal gates between them, and they cancel. The overlap is then a product of single-qubit terms, which is trivial to compute classically. The encoding needs at least two layers for the entangling gates to affect the result. `quantum_core.py` uses `REPS = 2` for that reason.
 
-### 7. The textbook encoding was worse
+### 9. The textbook encoding was worse
 
 A ZZ-style feature map, the usual starting point for quantum kernels, scored between 0.59 and 0.74 on this data depending on settings, and needs twice as many two-qubit gates. It is too sensitive: two nearly identical objects had an overlap of only 0.61.
 
-### 8. Tuning does not produce a quantum advantage
+### 10. Tuning does not produce a quantum advantage
 
 `tuning_study.py` repeats the comparison on a larger sample (300 stars, 300 galaxies and 150 quasars per split, 8 splits) and sweeps 16 quantum encodings. This study used six prototypes for both the quantum and the classical prototype score.
 
@@ -218,14 +284,16 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 - **The task is hard for every model.** Many quasars have colours close to those of stars. At the chosen threshold the scorer flags about 65% of quasars and 24% of normal objects.
 - **Quasars are a stand-in for "unusual".** They are a known class with labels, which is what makes scoring possible. A real survey anomaly has no label.
 - **Small sample.** The shipped benchmark uses 280 objects. The larger tuning study changes the picture for one classical method, as shown above.
-- **The benchmark table is noise-free.** The noise table applies one measured noise level through a simple model. Only the fifteen single-object runs on Qollab include IonQ's full noise model.
+- **The benchmark table is noise-free.** The noise table applies one measured noise level through a simple model. Only the runs on Qollab include IonQ's full noise model.
+- **The calibration over-corrects on a second backend.** On an IBM noise-model simulator the corrected scores came out 0.013 too low on average (finding 6). The correction assumes one simple noise model, and it fitted the IonQ simulator better than the IBM one.
 - **The calibration assumes all six blocks see the same noise.** This is untested on hardware, where qubits differ and the calibration block might need to be rotated across positions.
 - **The Qollab run scores one object at a time**, because of the one-circuit rule.
 
 ## Extending it
 
 - **More prototypes.** The IonQ Forte simulators accept 29 qubits, which fits six prototypes plus the calibration block.
-- **Fewer layers against noise.** Compare the signal survival at different encoding depths to find the best trade between expressiveness and noise.
+- **Depth against accuracy.** Finding 5 gives the noise cost of each extra layer. Measuring the detection accuracy at each depth would show where the trade is best.
+- **Two-point calibration.** Add a second calibration block with a low known overlap, so the run measures the noise floor that the correction currently assumes. Finding 6 is the case it should fix.
 - **Hardware.** Run the calibrated circuit on an IonQ quantum computer and check whether one calibration block is enough when qubits differ.
 - **More features.** Light-curve features from time-domain surveys would raise the dimension, which is where quantum kernels are harder to simulate classically.
 - **Other domains.** `quantum_core.py` has no astronomy in it. Any four numeric features scaled to the range 0 to π/2 will work.
@@ -236,12 +304,17 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 |---|---|
 | `main.py` | Qollab entry point: scores one object in one 24-qubit circuit and draws the chart |
 | `quantum_core.py` | Encoding, comparison blocks, combined circuit, result parsing, noise correction |
+| `runner.py` | Sends circuits to the backend: one circuit on IonQ, separate small circuits elsewhere |
+| `experiments.py` | The depth and sample experiments |
+| `collect_runs.py` | Turns pasted console output into tables and adds runs to `ionq_runs.json` |
+| `depth_figure.py` | Averages the depth runs and draws `figures/depth_forte1_average.png` |
+| `figures/` | Charts from the runs: the averaged depth figure, the three single depth runs, the sample study and an example score run |
 | `model.json` | Feature scaling, five prototypes, calibration pair, threshold, and the 136 test objects |
 | `objects.csv` | The 280-object catalogue sample |
 | `prepare_data.py` | Builds `objects.csv` from the full Kaggle file |
 | `compare.py` | The benchmark; writes `model.json` and `results.json` |
 | `results.json` | Benchmark, shot-study and noise-study numbers shown above |
-| `ionq_runs.json` | Raw results of the nine IonQ simulator runs in finding 2 |
+| `ionq_runs.json` | Raw results of every simulator run reported here, IonQ and IBM noise model |
 | `noise_check.py` | Tests the calibration under gate-level noise on a local simulator |
 | `test_core.py` | Ten checks of the encoding, the circuit layout, result parsing and the correction |
 | `LICENSE` | MIT licence |
@@ -253,13 +326,14 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 
 - In-circuit noise calibration for a one-circuit-per-run backend: a block with a known answer rides along with the measurement and corrects it in the same job. The need for it, and the noise level, were measured on the IonQ simulator during the hackathon.
 - A benchmark of quantum against classical anomaly detection on real survey data, with the classical side tuned in its own favour, and the negative result reported as found.
-- An analytical observation: a single RY, CZ, RZ encoding layer loses all effect of its entangling gates in an overlap test.
+- A depth study that fits in one run: six calibration blocks at six depths in one circuit, giving a measured loss of about 1.6% of the signal per two-qubit gate on the IonQ Forte 1 simulator.
+- An analytical observation, confirmed on the simulator: a single RY, CZ, RZ encoding layer loses all effect of its entangling gates in an overlap test, and measures as almost noise-free.
 
 ### Technical execution
 
 - Runs as a single job on the IonQ simulator through Qollab, with measured and corrected results printed next to exact values in every run.
 - Ten automated checks in `test_core.py` cover the circuit layout, result parsing, the noise correction, and the agreement between the 24-qubit circuit and separate 4-qubit simulations.
-- The noise correction was checked on the IonQ simulator itself (score error down from 0.043 to 0.011 over six runs) and under gate-by-gate noise on a local simulator.
+- The noise correction was checked on the IonQ simulator itself (score error down from 0.043 to 0.011 over six runs), on an IBM noise-model simulator over 40 objects (0.028 to 0.016, with an overshoot that is reported), and under gate-by-gate noise on a local simulator.
 - All models share the same data, the same split, and scaling fitted on training data only. Results are averaged over 10 random splits with the spread reported.
 - No dependencies beyond Qiskit, NumPy and Matplotlib at run time, and a fallback path for backends that are not IonQ.
 

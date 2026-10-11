@@ -13,7 +13,12 @@ appear as fields under Run settings:
                   the IonQ noisy simulator, plus about 12 s of fixed overhead).
   Layers          encoding layers. 2 is the design used for every reported
                   result; other values are for studying noise against depth.
-  Chart           draw a bar chart of the overlaps after the numbers.
+  Chart           draw a chart after the numbers.
+  Experiment      "score" (the default) scores one object. "depth" measures
+                  noise against circuit depth in one run. "sample" scores many
+                  objects and compares verdicts with and without correction;
+                  it needs a browser simulator. See experiments.py.
+  Sample Size     how many objects the "sample" experiment scores.
 
 On an IonQ backend the run is one 24-qubit circuit, because IonQ accepts one
 circuit per run. On any other backend the same six blocks are sent as six
@@ -23,31 +28,13 @@ circuit per run. On any other backend the same six blocks are sent as six
 import json
 import time
 
-from qiskit import transpile
-
 from quantum_core import (N_PROTOTYPES, anomaly_score, block_circuits,
                           combined_circuit, exact_overlaps, mitigate,
                           overlaps_from_block_counts, overlaps_from_counts,
                           survival_factor)
+from runner import Runner
 
 DESIGN_LAYERS = 2
-
-
-def is_ionq(be):
-    """True for IonQ backends, which accept exactly one circuit per run."""
-    text = f"{type(be).__module__} {type(be).__name__} {getattr(be, 'name', '')}"
-    return "ionq" in text.lower()
-
-
-def run_counts(be, circuit, shots):
-    """Run one circuit. Local simulators may need it rewritten in their own
-    gate set first; IonQ compiles the circuit itself."""
-    try:
-        return be.run(circuit, shots=shots).result().get_counts()
-    except Exception:
-        if is_ionq(be):
-            raise                      # never send a second job to IonQ
-        return be.run(transpile(circuit, be), shots=shots).result().get_counts()
 
 
 def draw_chart(measured, corrected, exact, cal, title):
@@ -88,11 +75,25 @@ def draw_chart(measured, corrected, exact, cal, title):
     plt.show()
 
 
-def main(object_number: int = 0, shots: int = 400, layers: int = DESIGN_LAYERS, chart: bool = True):
+# Qollab reads this line to build the Run settings form: keep it on one line,
+# with plain literal defaults (no names or expressions).
+def main(object_number: int = 0, shots: int = 400, layers: int = 2, chart: bool = True, experiment: str = "score", sample_size: int = 40):
     with open("model.json") as f:          # literal path: required by Qollab
         model = json.load(f)
 
-    layers = max(1, min(4, layers))
+    runner = Runner(backend)  # noqa: F821
+    experiment = experiment.strip().lower()
+    if experiment == "depth":
+        from experiments import depth_study
+        return depth_study(runner, model, shots, chart)
+    if experiment == "sample":
+        from experiments import sample_study
+        return sample_study(runner, model, shots, sample_size, object_number, chart)
+    if experiment != "score":
+        print(f'unknown experiment "{experiment}": use score, depth or sample')
+        return
+
+    layers = max(1, min(6, layers))
     objects = model["test_objects"]
     obj = objects[object_number % len(objects)]
     x, prototypes = obj["x"], model["prototypes"]
@@ -101,19 +102,19 @@ def main(object_number: int = 0, shots: int = 400, layers: int = DESIGN_LAYERS, 
 
     print(f"object {object_number} of {len(objects)} | colours (scaled): {x}")
     t0 = time.time()
-    if is_ionq(backend):  # noqa: F821
+    if runner.ionq:
         qc = combined_circuit(x, prototypes, cal_a, cal_b, layers)
         print(f"one circuit: {qc.num_qubits} qubits, depth {qc.depth()}, "
               f"{qc.count_ops().get('cz', 0)} CZ gates, {N_PROTOTYPES} prototype "
               f"comparisons + 1 calibration block, {layers} layers, {shots} shots")
-        blocks = overlaps_from_counts(run_counts(backend, qc, shots))  # noqa: F821
+        blocks = overlaps_from_counts(runner.counts(qc, shots))
     else:
         circuits = block_circuits(x, prototypes, cal_a, cal_b, layers)
         print(f"not an IonQ backend: sending the six blocks as {len(circuits)} "
               f"separate {circuits[0].num_qubits}-qubit circuits, {layers} layers, "
               f"{shots} shots each")
         blocks = overlaps_from_block_counts(
-            [run_counts(backend, c, shots) for c in circuits])  # noqa: F821
+            [runner.counts(c, shots) for c in circuits])
     print(f"run time: {time.time() - t0:.1f}s")
 
     measured, cal_measured = blocks[:N_PROTOTYPES], blocks[N_PROTOTYPES]

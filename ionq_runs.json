@@ -420,5 +420,146 @@
    "score_corrected": 0.496,
    "score_exact": 0.496
   }
+ ],
+ "experiment_runs": [
+  {
+   "experiment": "depth",
+   "backend": "ionq_simulator",
+   "shots": 400,
+   "wall_s": null,
+   "layers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "cz_gates": [
+    6,
+    12,
+    18,
+    24,
+    30,
+    36
+   ],
+   "exact": [
+    0.983,
+    0.9384,
+    0.9048,
+    0.8766,
+    0.8169,
+    0.7549
+   ],
+   "measured": [
+    0.97,
+    0.87,
+    0.7375,
+    0.655,
+    0.54,
+    0.5675
+   ],
+   "survival": [
+    0.9859,
+    0.9219,
+    0.8013,
+    0.7278,
+    0.6329,
+    0.7293
+   ],
+   "source": "Console output was not saved. Survival values recovered from the point coordinates in the saved chart (figures/depth_forte1_run1.svg, drawn 2026-10-11T04:25:37); measured values derived from them and they come out as whole counts of 400 shots."
+  },
+  {
+   "experiment": "depth",
+   "backend": "ionq_simulator",
+   "shots": 400,
+   "wall_s": 44.4,
+   "layers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "cz_gates": [
+    6,
+    12,
+    18,
+    24,
+    30,
+    36
+   ],
+   "exact": [
+    0.983,
+    0.9384,
+    0.9048,
+    0.8766,
+    0.8169,
+    0.7549
+   ],
+   "measured": [
+    0.97,
+    0.865,
+    0.7475,
+    0.6775,
+    0.605,
+    0.435
+   ],
+   "survival": [
+    0.9859,
+    0.9162,
+    0.8132,
+    0.7555,
+    0.7191,
+    0.538
+   ]
+  },
+  {
+   "experiment": "depth",
+   "backend": "ionq_simulator",
+   "shots": 400,
+   "wall_s": 43.8,
+   "layers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "cz_gates": [
+    6,
+    12,
+    18,
+    24,
+    30,
+    36
+   ],
+   "exact": [
+    0.983,
+    0.9384,
+    0.9048,
+    0.8766,
+    0.8169,
+    0.7549
+   ],
+   "measured": [
+    0.985,
+    0.8525,
+    0.7675,
+    0.675,
+    0.575,
+    0.505
+   ],
+   "survival": [
+    1.0,
+    0.902,
+    0.837,
+    0.7524,
+    0.6793,
+    0.6391
+   ]
+  }
  ]
 }
