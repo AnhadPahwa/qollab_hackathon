@@ -419,6 +419,39 @@
    "score_measured": 0.537,
    "score_corrected": 0.496,
    "score_exact": 0.496
+  },
+  {
+   "object": 105,
+   "class": "QSO",
+   "shots": 400,
+   "exec_ms": 18000,
+   "wall_s": 34.1,
+   "calibration_measured": 0.863,
+   "measured": [
+    0.34,
+    0.81,
+    0.64,
+    0.08,
+    0.44
+   ],
+   "corrected": [
+    0.37,
+    0.88,
+    0.69,
+    0.08,
+    0.48
+   ],
+   "exact": [
+    0.35,
+    0.92,
+    0.69,
+    0.09,
+    0.47
+   ],
+   "score_measured": 0.539,
+   "score_corrected": 0.501,
+   "score_exact": 0.496,
+   "note": "Repeat of object 105 on 11 Oct with the final code (runner.py, experiments.py)."
   }
  ],
  "experiment_runs": [
@@ -559,6 +592,355 @@
     0.7524,
     0.6793,
     0.6391
+   ]
+  },
+  {
+   "experiment": "sample",
+   "backend": "fake_boston",
+   "shots": 400,
+   "objects": 40,
+   "normal": 20,
+   "quasars": 20,
+   "wall_s": 371.4,
+   "threshold": 0.4429,
+   "mean_survival": 0.924,
+   "mean_abs_error_measured": 0.0278,
+   "mean_abs_error_corrected": 0.0164,
+   "false_alarm_rate": {
+    "exact": 0.25,
+    "measured": 0.35,
+    "corrected": 0.25
+   },
+   "quasars_flagged": {
+    "exact": 0.5,
+    "measured": 0.7,
+    "corrected": 0.35
+   },
+   "verdicts_matching_noise_free": {
+    "measured": 34,
+    "corrected": 35
+   },
+   "rows": [
+    {
+     "object": 0,
+     "class": "STAR",
+     "survival": 0.9248,
+     "score_exact": 0.3041,
+     "score_measured": 0.349,
+     "score_corrected": 0.3011
+    },
+    {
+     "object": 4,
+     "class": "STAR",
+     "survival": 0.9448,
+     "score_exact": 0.4404,
+     "score_measured": 0.4765,
+     "score_corrected": 0.4496
+    },
+    {
+     "object": 9,
+     "class": "STAR",
+     "survival": 0.9219,
+     "score_exact": 0.3322,
+     "score_measured": 0.359,
+     "score_corrected": 0.31
+    },
+    {
+     "object": 14,
+     "class": "STAR",
+     "survival": 0.9391,
+     "score_exact": 0.4303,
+     "score_measured": 0.4695,
+     "score_corrected": 0.4391
+    },
+    {
+     "object": 19,
+     "class": "STAR",
+     "survival": 0.9162,
+     "score_exact": 0.4714,
+     "score_measured": 0.488,
+     "score_corrected": 0.4469
+    },
+    {
+     "object": 24,
+     "class": "STAR",
+     "survival": 0.9248,
+     "score_exact": 0.648,
+     "score_measured": 0.6435,
+     "score_corrected": 0.6196
+    },
+    {
+     "object": 28,
+     "class": "GALAXY",
+     "survival": 0.9048,
+     "score_exact": 0.3006,
+     "score_measured": 0.342,
+     "score_corrected": 0.2794
+    },
+    {
+     "object": 33,
+     "class": "STAR",
+     "survival": 0.9562,
+     "score_exact": 0.4707,
+     "score_measured": 0.48,
+     "score_corrected": 0.459
+    },
+    {
+     "object": 38,
+     "class": "STAR",
+     "survival": 0.9105,
+     "score_exact": 0.3131,
+     "score_measured": 0.347,
+     "score_corrected": 0.289
+    },
+    {
+     "object": 43,
+     "class": "GALAXY",
+     "survival": 0.9191,
+     "score_exact": 0.3134,
+     "score_measured": 0.353,
+     "score_corrected": 0.3015
+    },
+    {
+     "object": 48,
+     "class": "STAR",
+     "survival": 0.9048,
+     "score_exact": 0.4325,
+     "score_measured": 0.4355,
+     "score_corrected": 0.3881
+    },
+    {
+     "object": 52,
+     "class": "GALAXY",
+     "survival": 0.9162,
+     "score_exact": 0.3173,
+     "score_measured": 0.3645,
+     "score_corrected": 0.3156
+    },
+    {
+     "object": 57,
+     "class": "STAR",
+     "survival": 0.9077,
+     "score_exact": 0.4901,
+     "score_measured": 0.5105,
+     "score_corrected": 0.4671
+    },
+    {
+     "object": 62,
+     "class": "GALAXY",
+     "survival": 0.9191,
+     "score_exact": 0.3753,
+     "score_measured": 0.4215,
+     "score_corrected": 0.3761
+    },
+    {
+     "object": 67,
+     "class": "GALAXY",
+     "survival": 0.9448,
+     "score_exact": 0.3186,
+     "score_measured": 0.367,
+     "score_corrected": 0.3337
+    },
+    {
+     "object": 72,
+     "class": "GALAXY",
+     "survival": 0.9562,
+     "score_exact": 0.3103,
+     "score_measured": 0.353,
+     "score_corrected": 0.3262
+    },
+    {
+     "object": 76,
+     "class": "GALAXY",
+     "survival": 0.9191,
+     "score_exact": 0.3854,
+     "score_measured": 0.419,
+     "score_corrected": 0.3734
+    },
+    {
+     "object": 81,
+     "class": "GALAXY",
+     "survival": 0.9419,
+     "score_exact": 0.3118,
+     "score_measured": 0.359,
+     "score_corrected": 0.3233
+    },
+    {
+     "object": 86,
+     "class": "GALAXY",
+     "survival": 0.9077,
+     "score_exact": 0.4448,
+     "score_measured": 0.487,
+     "score_corrected": 0.4412
+    },
+    {
+     "object": 91,
+     "class": "STAR",
+     "survival": 0.9048,
+     "score_exact": 0.3842,
+     "score_measured": 0.4125,
+     "score_corrected": 0.3654
+    },
+    {
+     "object": 96,
+     "class": "QSO",
+     "survival": 0.9448,
+     "score_exact": 0.4183,
+     "score_measured": 0.4365,
+     "score_corrected": 0.4072
+    },
+    {
+     "object": 98,
+     "class": "QSO",
+     "survival": 0.8934,
+     "score_exact": 0.4147,
+     "score_measured": 0.4465,
+     "score_corrected": 0.3941
+    },
+    {
+     "object": 100,
+     "class": "QSO",
+     "survival": 0.9219,
+     "score_exact": 0.4121,
+     "score_measured": 0.4345,
+     "score_corrected": 0.3919
+    },
+    {
+     "object": 102,
+     "class": "QSO",
+     "survival": 0.9248,
+     "score_exact": 0.3794,
+     "score_measured": 0.401,
+     "score_corrected": 0.3607
+    },
+    {
+     "object": 104,
+     "class": "QSO",
+     "survival": 0.9191,
+     "score_exact": 0.4885,
+     "score_measured": 0.5065,
+     "score_corrected": 0.4686
+    },
+    {
+     "object": 106,
+     "class": "QSO",
+     "survival": 0.9105,
+     "score_exact": 0.4743,
+     "score_measured": 0.498,
+     "score_corrected": 0.4548
+    },
+    {
+     "object": 108,
+     "class": "QSO",
+     "survival": 0.8934,
+     "score_exact": 0.5154,
+     "score_measured": 0.547,
+     "score_corrected": 0.5004
+    },
+    {
+     "object": 110,
+     "class": "QSO",
+     "survival": 0.9162,
+     "score_exact": 0.4384,
+     "score_measured": 0.4685,
+     "score_corrected": 0.4256
+    },
+    {
+     "object": 112,
+     "class": "QSO",
+     "survival": 0.882,
+     "score_exact": 0.4582,
+     "score_measured": 0.487,
+     "score_corrected": 0.4297
+    },
+    {
+     "object": 114,
+     "class": "QSO",
+     "survival": 0.9391,
+     "score_exact": 0.4372,
+     "score_measured": 0.4695,
+     "score_corrected": 0.4391
+    },
+    {
+     "object": 116,
+     "class": "QSO",
+     "survival": 0.8991,
+     "score_exact": 0.3794,
+     "score_measured": 0.3945,
+     "score_corrected": 0.3363
+    },
+    {
+     "object": 118,
+     "class": "QSO",
+     "survival": 0.9277,
+     "score_exact": 0.4506,
+     "score_measured": 0.463,
+     "score_corrected": 0.426
+    },
+    {
+     "object": 120,
+     "class": "QSO",
+     "survival": 0.9391,
+     "score_exact": 0.4304,
+     "score_measured": 0.4595,
+     "score_corrected": 0.4285
+    },
+    {
+     "object": 122,
+     "class": "QSO",
+     "survival": 0.9476,
+     "score_exact": 0.4748,
+     "score_measured": 0.49,
+     "score_corrected": 0.4653
+    },
+    {
+     "object": 124,
+     "class": "QSO",
+     "survival": 0.9134,
+     "score_exact": 0.4571,
+     "score_measured": 0.4875,
+     "score_corrected": 0.4448
+    },
+    {
+     "object": 126,
+     "class": "QSO",
+     "survival": 0.9277,
+     "score_exact": 0.4729,
+     "score_measured": 0.5085,
+     "score_corrected": 0.475
+    },
+    {
+     "object": 128,
+     "class": "QSO",
+     "survival": 0.9334,
+     "score_exact": 0.4152,
+     "score_measured": 0.4365,
+     "score_corrected": 0.4007
+    },
+    {
+     "object": 130,
+     "class": "QSO",
+     "survival": 0.9362,
+     "score_exact": 0.3599,
+     "score_measured": 0.3885,
+     "score_corrected": 0.3511
+    },
+    {
+     "object": 132,
+     "class": "QSO",
+     "survival": 0.9533,
+     "score_exact": 0.5758,
+     "score_measured": 0.5685,
+     "score_corrected": 0.5504
+    },
+    {
+     "object": 134,
+     "class": "QSO",
+     "survival": 0.9533,
+     "score_exact": 0.4636,
+     "score_measured": 0.455,
+     "score_corrected": 0.4314
+    }
    ]
   }
  ]

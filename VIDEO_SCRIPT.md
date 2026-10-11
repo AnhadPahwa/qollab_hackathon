@@ -1,6 +1,6 @@
 # Demo video script (2 to 3 minutes)
 
-Screen recording with voiceover. About 400 words, which is roughly 2 minutes 45 at a normal pace. A 400-shot run takes about 35 seconds, so cut the wait in editing.
+Screen recording with voiceover. About 450 words, which is close to the 3-minute limit at a normal pace, so keep the pace up or trim the first section. A 400-shot run takes about 35 seconds, so cut the wait in editing.
 
 ## 0:00 to 0:25 — The problem
 
@@ -26,18 +26,20 @@ Screen recording with voiceover. About 400 words, which is roughly 2 minutes 45 
 
 Use objects whose verdicts you have already checked. If a quasar is missed in your recording, say so: about a third are at this threshold.
 
-## 1:50 to 2:30 — The results
+## 1:50 to 2:35 — The results
 
-**Show:** the two results tables at the top of the README.
+**Show:** the two results tables at the top of the README, then the depth figure (`figures/depth_forte1_average.png`).
 
 > Against four classical detectors, over ten random splits, the quantum scorer reaches an AUC of 0.77. The best classical methods reach 0.80. So it comes close, but it does not win, and the classical side was tuned in its own favour.
 >
 > The calibration is what works. We measured that the simulator's noise shrinks every overlap by about eleven percent. Uncorrected, that flags more than half of all normal objects. With the calibration block, the false-alarm rate goes back to a quarter, where it should be.
+>
+> One run with six calibration blocks at six depths gives the whole noise curve: about 1.6 percent of the signal lost per two-qubit gate.
 
-## 2:30 to 2:50 — What we learned
+## 2:35 to 3:00 — What we learned
 
 **Show:** the "What we found" headings.
 
-> Three things came out of this. On a one-circuit backend, you can carry your noise calibration inside the same circuit. A one-layer encoding quietly loses its entanglement in an overlap test. And on four features, there is no quantum advantage to claim. Everything here can be reproduced from the scripts in the project.
+> Three things came out of this. On a one-circuit backend, you can carry your noise calibration inside the same circuit. It held on the IonQ simulator, and on an IBM noise model it helped but overshot, which we report. A one-layer encoding quietly loses its entanglement in an overlap test, and measures as noise-free. And on four features, there is no quantum advantage to claim. Everything here can be reproduced from the scripts in the project.
 >
 > This effort is supported by Qollab and IonQ.
