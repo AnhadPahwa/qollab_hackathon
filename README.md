@@ -1,9 +1,9 @@
-# One Circuit, Self-Calibrated: quantum anomaly scoring for telescope catalogues
+# One Circuit, Six Comparisons: quantum anomaly scoring for telescope catalogues
 
 **Theme:** Quantum Impact
-**Team:** [TEAM NAME] ([NODE])
-**Demo video:** [PUBLIC VIDEO LINK]
-**Repository:** [PUBLIC REPO LINK]
+**Team:** QCLA (UCLA)
+**Demo video:** [\[PUBLIC VIDEO LINK\]](https://drive.google.com/file/d/1ZcvZsEtcplhu3EQA-DhdCfT75O9s_ksz/view?usp=sharing)
+**Repository:** [\[PUBLIC REPO LINK\]](https://github.com/AnhadPahwa/qollab_hackathon.git)
 
 This effort is supported by Qollab & IonQ.
 
@@ -356,6 +356,6 @@ Every fixed quantum encoding scored between 0.77 and 0.82, level with the classi
 
 - **AI tools:** Claude (Anthropic) was used for planning, for writing and testing the code, and for drafting this documentation.
 - **Libraries:** Qiskit, NumPy, pandas, scikit-learn, and qiskit-aer for the optional noise check. qiskit-ionq is provided by the Qollab runtime.
-- **Data:** "Stellar Classification Dataset - SDSS17" from Kaggle, derived from Sloan Digital Sky Survey Data Release 17. Licence: [CHECK ON THE KAGGLE PAGE AND STATE HERE].
+- **Data:** "Stellar Classification Dataset - SDSS17" from Kaggle, derived from Sloan Digital Sky Survey Data Release 17. Licence: Licence: listed on Kaggle as "Data files © Original Authors". The original source is the Sloan Digital Sky Survey, which states that all data in its public data releases are in the public domain (sdss.org/collaboration/image-use-policy). Credit: Sloan Digital Sky Survey, Data Release 17, www.sdss.org.
 - **Templates and prior work:** none. All code was written during the build window.
 - **Licence:** MIT.
